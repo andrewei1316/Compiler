@@ -4,9 +4,9 @@
 from nfa_and_dfa import NFA, DFA, NFANode, DFANode
 
 
-class LexicaAnalyze(object):
+class LexicalAnalyze(object):
     def __init__(self):
-        super(LexicaAnalyze, self).__init__()
+        super(LexicalAnalyze, self).__init__()
         self.productions = []
         self.key_words = {}
         self.tool_set = {}
@@ -202,7 +202,7 @@ class LexicaAnalyze(object):
 
 
 def main():
-    lex_ana = LexicaAnalyze()
+    lex_ana = LexicalAnalyze()
     lex_ana.read_lex_grammar('lex_grammar.txt')
     lex_ana.create_nfa()
     lex_ana.nfa_to_dfa()

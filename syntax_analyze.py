@@ -4,10 +4,10 @@
 from nfa_and_dfa import DFA, LRDFANode
 
 
-class ParserAnalyze(object):
+class SyntaxAnalyze(object):
 
     def __init__(self):
-        super(ParserAnalyze, self).__init__()
+        super(SyntaxAnalyze, self).__init__()
         self.first_set = {}
         self.productions = []
         self.all_elem = set()
@@ -226,26 +226,26 @@ class ParserAnalyze(object):
 
 
 def main():
-    pa = ParserAnalyze()
-    # pa.read_syntax_grammar('sample_syn_grammar.txt')
-    pa.read_syntax_grammar('syn_grammar.txt')
-    pa.get_terminate_noterminate()
-    pa.init_first_set()
-    pa.create_lr_dfa()
-    pa.read_and_analyze('token_table.data')
-    # pa.read_and_analyze('sample_token_table.txt')
-    # for key in pa.lr_analyze_table:
-    #     print key, ': ', pa.lr_analyze_table[key]
-    # for pro in pa.productions:
-    #     print pa.productions.index(pro), pro
-    # for key in pa.first_set.keys():
-    #     print 'key =', key, '\n', 'first =', pa.first_set[key]
-    # print pa.productions
+    syn_ana = SyntaxAnalyze()
+    # syn_ana.read_syntax_grammar('sample_syn_grammar.txt')
+    syn_ana.read_syntax_grammar('syn_grammar.txt')
+    syn_ana.get_terminate_noterminate()
+    syn_ana.init_first_set()
+    syn_ana.create_lr_dfa()
+    syn_ana.read_and_analyze('token_table.data')
+    # syn_ana.read_and_analyze('sample_token_table.txt')
+    # for key in syn_ana.lr_analyze_table:
+    #     print key, ': ', syn_ana.lr_analyze_table[key]
+    # for pro in syn_ana.productions:
+    #     print syn_ana.productions.index(pro), pro
+    # for key in syn_ana.first_set.keys():
+    #     print 'key =', key, '\n', 'first =', syn_ana.first_set[key]
+    # print syn_ana.productions
     # print '\n'
-    # for left in pa.productions_dict:
-    #     print left, ':', pa.productions_dict[left]
-    # print pa.terminate
-    # print pa.noterminate
+    # for left in syn_ana.productions_dict:
+    #     print left, ':', syn_ana.productions_dict[left]
+    # print syn_ana.terminate
+    # print syn_ana.noterminate
 
 if __name__ == '__main__':
     main()
