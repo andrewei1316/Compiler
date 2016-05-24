@@ -1,14 +1,14 @@
 # Compiler
-基于 Python 的词法和LR(1)文法分析器
+ 基于 Python 的词法和LR(1)文法分析器
 =======================================
 
 ## 总体说明
-** 编程语言:** Python 2.7.11
-** 编程平台:** Ubuntu16.04
-** 编程环境:** sublime
-** 完成的内容:** 实现了 3型文法的词法分析器和2 型文法的LR(1)语法分析器。
-** 测试文法:** 一个类C语言的文法
-** 测试程序:** 一个类C语言的程序。
+编程语言:Python 2.7.11
+编程平台:Ubuntu16.04
+编程环境:sublime
+完成的内容:实现了 3型文法的词法分析器和2 型文法的LR(1)语法分析器。
+测试文法:一个类C语言的文法
+测试程序:** 一个类C语言的程序。
 
 ## 文件说明
 本程序共涉及7个文件, 现将其说明如下:
@@ -39,51 +39,55 @@ token_table.data			词法分析输出的token表
 ## 代码说明
 ### 工具类(nfa_and_dfa.py)
 ```python
-class NFANode(object)						// NFA的节点结构
-	def __init__(self, name, _type)			// 类的构造函数, 传入名称和类型
-	def add_edge(self, alpha, target)			// 为节点添加边
+class NFANode(object)								# NFA的节点结构
+	def __init__(self, name, _type)					# 类的构造函数, 传入名称和类型
+	def add_edge(self, alpha, target)				# 为节点添加边
 
-class NFA(object)							// NFA 的结构
-	def __init__(self)						// 类的构造函数
-	def get_target(self, cur_status, alpha)		// 从当前状态,输入一个字符返回下一个状态
+class NFA(object)									# NFA 的结构
+	def __init__(self)								# 类的构造函数
+	def get_target(self, cur_status, alpha)			# 从当前状态,输入一个字符返回下一个状态
 
-class DFANode(object)						// DFA 的节点结构
-	def __init__(self, name, _type)			// 类的构造函数, 传入名称和类型
-	def add_edge(self, alpha, target)			// 为节点添加边
+class DFANode(object)								# DFA 的节点结构
+	def __init__(self, name, _type)					# 类的构造函数, 传入名称和类型
+	def add_edge(self, alpha, target)				# 为节点添加边
 
-class LRDFANode(object)					// LR(1)DFA的节点结构
-	def __init__(self, set_id)					// 类的构造函数, 传入节点的编号
-	def add_object_set(self, id, left, right, index, tail) // 为项目集添加产生式
-	def add_object_set_by_set(self, object_set)	// 以一个集合的方式向项目集中添加产生式
+class LRDFANode(object)								# LR(1)DFA的节点结构
+	def __init__(self, set_id)						# 类的构造函数, 传入节点的编号
+	def add_object_set(self, id, left, right, index, tail) 		# 为项目集添加产生式
+	def add_object_set_by_set(self, object_set)			# 以一个集合的方式向项目集中添加产生式
 
-class DFA(object)							// DFA 的结构类
-	def __init__(self)						// 构造函数
-	def get_target(self, cur_status, alpha)		// 从当前状态,输入一个字符返回下一个状态
+class DFA(object)									# DFA 的结构类
+	def __init__(self)								# 构造函数
+	def get_target(self, cur_status, alpha)			# 从当前状态,输入一个字符返回下一个状态
 ```
 ### 词法分析器(lexical_analyze.py)
 ```python
-class LexicaAnalyze(object)					// 与词法分析有关的操作
-	def read_lex_grammar(self, file_name)	// 读取词法的文法, 参数为文法文件路径
-	def create_nfa(self)					// 根据输入的文法创建 nfa
-		get_create_nfa_node(name, _type)	// 创建新的节点或者返回一个已存在的节点
-	def nfa_to_dfa(self)					// 由 nfa 转向 dfa
-		def get_create_dfaNode(name, _type)// 创建新的节点或者返回一个已存在的节点
-	def run_on_dfa(self, line,pos)			// 给定一行语句, 让其在dfa上跑生成 token
-	def read_and_analyze(self, file_name)		// 读取待分析的句子并生成token_table
-def main()								// 主函数调用, 创建 LexicaAnalyze 对象, 并完成词法分析操作
+class LexicaAnalyze(object)							# 与词法分析有关的操作
+	def read_lex_grammar(self, file_name)			# 读取词法的文法, 参数为文法文件路径
+	def create_nfa(self)							# 根据输入的文法创建 nfa
+		get_create_nfa_node(name, _type)			# 创建新的节点或者返回一个已存在的节点
+	def nfa_to_dfa(self)							# 由 nfa 转向 dfa
+		def get_create_dfaNode(name, _type) 		# 创建新的节点或者返回一个已存在的节点
+	def run_on_dfa(self, line,pos)					# 给定一行语句, 让其在dfa上跑生成 token
+	def read_and_analyze(self, file_name)			# 读取待分析的句子并生成token_table
+def main()											# 主函数调用, 创建 LexicaAnalyze 对象, 并完成词法分析操作
 ```
 ### 语法分析器(syntax_analyze.py)
 ```python
-class SyntaxAnalyze(object)					// 与语法分析相关的操作的类
-	def __inti__(self) 						// 构造函数
-	def read_syntax_grammar(self, file_name) // 读取语法分析需要的文法, 传入文件名
-	def get_terminate_noterminate(self)		// 得到文法的非终结符和终结符
-	def __get_first_set(self, cur_status, all_elem)// 递归得到一个非终结符的first 集
-	def init_first_set(self) 					// 初始化所有符号的first集
-	def create_lr_dfa(self)					// 创建项目集 DFA, 同时构造分析表
-		create_get_lr_dfa_node(set_id)		// 创建新的节点或者得到一个已有的节点
-		expand_production(self, production,set)// 通过一个产生式得到与其项目集
-	def run_on_lr_dfa(self, tokens)			// 分析 token_table 并返回结果
-	def read_and_analyze(self, file_name)		// 读取token_table
-def main()							// 主函数，创建 SyntaxAnalyze 对象并进行所有操作输出结果
+class SyntaxAnalyze(object)							# 与语法分析相关的操作的类
+	def __inti__(self) 								# 构造函数
+	def read_syntax_grammar(self, file_name) 		# 读取语法分析需要的文法, 传入文件名
+	def get_terminate_noterminate(self)				# 得到文法的非终结符和终结符
+	def __get_first_set(self, cur_status, all_elem)	# 递归得到一个非终结符的first 集
+	def init_first_set(self) 						# 初始化所有符号的first集
+	def create_lr_dfa(self)							# 创建项目集 DFA, 同时构造分析表
+		create_get_lr_dfa_node(set_id)				# 创建新的节点或者得到一个已有的节点
+		expand_production(self, production,set)		# 通过一个产生式得到与其项目集
+	def run_on_lr_dfa(self, tokens)					# 分析 token_table 并返回结果
+	def read_and_analyze(self, file_name)			# 读取token_table
+def main()											# 主函数，创建 SyntaxAnalyze 对象并进行所有操作输出结果
 ```
+### 运行
+```python
+python lexical_analyze.py 							# 生成 token_table
+python syntax_analyze.py 							# 输出语法分析结果
